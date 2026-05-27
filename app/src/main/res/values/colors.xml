@@ -4,6 +4,11 @@
     <color name="white">#FFFFFFFF</color>
     <color name="brand_teal">#0D3B41</color>
     <color name="brand_orange">#F37021</color>
+<<<<<<< Updated upstream
+=======
+    <color name="google_blue">#4285F4</color>
+    <color name="facebook_blue">#1877F2</color>
+>>>>>>> Stashed changes
     <color name="text_grey">#666666</color>
     <color name="divider_grey">#E0E0E0</color>
 </resources>

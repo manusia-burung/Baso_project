@@ -14,11 +14,18 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
+<<<<<<< Updated upstream
         android:theme="@style/Theme.BasoProject"
         android:usesCleartextTraffic="true"> <!-- Mengizinkan koneksi http (localhost) -->
 
         <activity
             android:name=".ui.SplashActivity"
+=======
+        android:theme="@style/Theme.BasoProject">
+
+        <activity
+            android:name=".SplashActivity"
+>>>>>>> Stashed changes
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -27,7 +34,11 @@
         </activity>
 
         <activity
+<<<<<<< Updated upstream
             android:name=".ui.LoginActivity"
+=======
+            android:name=".LoginActivity"
+>>>>>>> Stashed changes
             android:exported="false"
             android:windowSoftInputMode="adjustResize" />
 
@@ -45,10 +56,13 @@
             android:name=".TransactionSuccessActivity"
             android:exported="false"
             android:label="Transaksi Berhasil" />
+<<<<<<< Updated upstream
 
         <activity
             android:name=".ui.HomeActivity"
             android:exported="false" />
+=======
+>>>>>>> Stashed changes
     </application>
 
 </manifest>

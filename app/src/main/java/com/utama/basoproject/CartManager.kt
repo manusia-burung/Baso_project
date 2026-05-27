@@ -1,8 +1,11 @@
 package com.utama.basoproject
 
+<<<<<<< Updated upstream
 import com.utama.basoproject.model.CartItem
 import com.utama.basoproject.model.Product
 
+=======
+>>>>>>> Stashed changes
 object CartManager {
     private val cartItems = mutableListOf<CartItem>()
 

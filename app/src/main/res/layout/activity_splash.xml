@@ -7,8 +7,13 @@
 
     <ImageView
         android:id="@+id/ivLogo"
+<<<<<<< Updated upstream
         android:layout_width="220dp"
         android:layout_height="220dp"
+=======
+        android:layout_width="400dp"
+        android:layout_height="400dp"
+>>>>>>> Stashed changes
         android:src="@drawable/baso_logo"
         android:contentDescription="Logo Baso Berkah"
         app:layout_constraintBottom_toBottomOf="parent"
