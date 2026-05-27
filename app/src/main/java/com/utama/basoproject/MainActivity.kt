@@ -9,12 +9,15 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.utama.basoproject.adapter.ProductAdapter
 import com.utama.basoproject.model.Product
+import com.utama.basoproject.network.ApiClient
+import kotlinx.coroutines.launch
 
 class MainActivity : AppCompatActivity() {
 
@@ -29,27 +32,23 @@ class MainActivity : AppCompatActivity() {
         enableEdgeToEdge()
         setContentView(R.layout.activity_main)
 
-        // Set Window Insets for modern edge-to-edge look
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, 0)
             insets
         }
 
-        // Initialize Views
         rvProducts = findViewById(R.id.rvProducts)
         tvCartBadge = findViewById(R.id.tvCartBadge)
         fabCart = findViewById(R.id.fabCart)
         bottomNav = findViewById(R.id.bottomNavigation)
 
         setupRecyclerView()
-        loadDummyData()
+        loadMenuFromApi() // Sekarang mengambil dari database!
         updateCartBadge()
 
-        // Cart Click Logic
         fabCart.setOnClickListener {
             if (CartManager.getCartCount() > 0) {
-                // Ensure CartActivity is created in your project
                 try {
                     val intent = Intent(this, Class.forName("com.utama.basoproject.CartActivity"))
                     startActivity(intent)
@@ -60,27 +59,51 @@ class MainActivity : AppCompatActivity() {
                 Toast.makeText(this, "Keranjang masih kosong", Toast.LENGTH_SHORT).show()
             }
         }
-
-        // Bottom Navigation Logic
-        bottomNav.setOnItemSelectedListener { item ->
-            when (item.itemId) {
-                R.id.nav_home -> true
-                else -> {
-                    Toast.makeText(this, "Fitur segera hadir", Toast.LENGTH_SHORT).show()
-                    false
-                }
-            }
-        }
     }
 
     private fun setupRecyclerView() {
         adapter = ProductAdapter(emptyList()) { product ->
             CartManager.addToCart(product)
             updateCartBadge()
-            Toast.makeText(this, "${product.name} ditambahkan ke keranjang", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "${product.name} ditambahkan", Toast.LENGTH_SHORT).show()
         }
         rvProducts.layoutManager = GridLayoutManager(this, 2)
         rvProducts.adapter = adapter
+    }
+
+    private fun loadMenuFromApi() {
+        // Menggunakan Coroutine untuk memanggil API di background
+        lifecycleScope.launch {
+            try {
+                val response = ApiClient.apiService.getMenu()
+                
+                // Ubah data dari Model Menu (Database) ke Model Product (Tampilan)
+                val products = response.map { menu ->
+                    Product(
+                        id = menu.id,
+                        name = menu.nama_menu,
+                        description = menu.deskripsi,
+                        price = menu.harga.toLong()
+                    )
+                }
+                
+                adapter.updateData(products)
+            } catch (e: Exception) {
+                e.printStackTrace()
+                Toast.makeText(this@MainActivity, "Gagal konek ke database: ${e.message}", Toast.LENGTH_LONG).show()
+                
+                // Jika database gagal, munculkan data dummy agar aplikasi tidak kosong
+                loadDummyData()
+            }
+        }
+    }
+
+    private fun loadDummyData() {
+        val products = listOf(
+            Product(1, "Bakso Super Urat", "Bakso Sapi spesial (Offline Mode)", 25000),
+            Product(2, "Bakso Ayam", "Bakso ayam halus (Offline Mode)", 20000)
+        )
+        adapter.updateData(products)
     }
 
     private fun updateCartBadge() {
@@ -91,19 +114,6 @@ class MainActivity : AppCompatActivity() {
         } else {
             tvCartBadge.visibility = View.GONE
         }
-    }
-
-    private fun loadDummyData() {
-        // Data sesuai dengan gambar yang diberikan
-        val products = listOf(
-            Product(1, "Bakso Super Urat", "Bakso super urat with menarapkan atau lendir a...", 25000),
-            Product(2, "Bakso Ayam", "Bakso ayam telor ayam, sapi, mgmpabu menditmu...", 25000),
-            Product(3, "Bakso Telur Puyuh", "Bakso sapi dengan isian telur puyuh gurih.", 22000),
-            Product(4, "Mie Ayam Bakso", "Mie ayam lezat dengan tambahan bakso urat.", 25000),
-            Product(5, "Bakso Mercon", "Bakso isi cabai rawit super pedas!", 23000),
-            Product(6, "Es Jeruk Peras", "Minuman jeruk peras segar alami.", 8000)
-        )
-        adapter.updateData(products)
     }
 
     override fun onResume() {

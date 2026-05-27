@@ -30,8 +30,9 @@
                 android:layout_width="38dp"
                 android:layout_height="38dp"
                 android:background="@drawable/bg_profile_circle"
+                android:contentDescription="Profil"
                 android:padding="8dp"
-                android:src="@android:drawable/ic_menu_my_places"
+                android:src="@drawable/ic_profile"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
@@ -42,6 +43,7 @@
                 android:id="@+id/ivLogoHeader"
                 android:layout_width="45dp"
                 android:layout_height="45dp"
+                android:contentDescription="Logo Baso Berkah"
                 android:src="@drawable/baso_logo"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -61,7 +63,8 @@
                     android:id="@+id/ivNotification"
                     android:layout_width="28dp"
                     android:layout_height="28dp"
-                    android:src="@android:drawable/ic_popup_reminder"
+                    android:contentDescription="Notifikasi"
+                    android:src="@drawable/ic_notification"
                     app:tint="@color/white" />
 
                 <View
@@ -105,7 +108,8 @@
                         android:layout_height="match_parent"
                         android:scaleType="centerCrop"
                         android:src="@drawable/baso_logo"
-                        android:alpha="0.2"/> <!-- Placeholder Background -->
+                        android:alpha="0.2"
+                        android:contentDescription="Banner Promo"/>
 
                     <View
                         android:layout_width="match_parent"
