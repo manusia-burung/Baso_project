@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="30dp"
+    android:gravity="center"
+    android:background="#FFFFFF">
+
+    <TextView
+        android:id="@+id/tvStatusHeader"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="PEMBAYARAN BERHASIL"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:textColor="#4CAF50"
+        android:layout_marginBottom="16dp"/>
+
+    <TextView
+        android:id="@+id/tvStrukDetail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Detail Struk"
+        android:textSize="18sp"
+        android:textAlignment="center"
+        android:layout_marginBottom="40dp"/>
+
+    <Button
+        android:id="@+id/btnSelesai"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text="Selesai &amp; Kembali ke Menu Utama"
+        android:backgroundTint="#154B4F"/>
+
+</LinearLayout>
